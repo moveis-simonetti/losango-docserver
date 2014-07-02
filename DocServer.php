@@ -24,7 +24,7 @@ class DocServer
         }
         
         $return = $this->session->getSftp()->read(
-            $this->configutarion->getDirectory() . '/req/' . $name,
+            $this->configutarion->getDirectory() . '/resp/' . $name,
             $content
         );
         
