@@ -1,6 +1,6 @@
 <?php
 
-abstract class Command
+abstract class Document
 {
     
     private $docServer;
@@ -12,7 +12,7 @@ abstract class Command
     
     public function generate($id, $content)
     {
-        
+        //$this->docServer->
     }
     
     public function fetch($id)
@@ -20,5 +20,7 @@ abstract class Command
         
     }
     
-    abstract protected function getFilaPrefix();
+    abstract protected function getFilePrefix();
+    
+    abstract protected function getBin();
 }
