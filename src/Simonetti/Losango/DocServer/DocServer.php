@@ -33,7 +33,7 @@ class DocServer
         
         if(false == $return)
         {
-            // todo: exception
+            throw new Exception("Erro ao ler o arquivo. Metodo: " . __METHOD__);
         }
         
         return $return;
@@ -50,7 +50,7 @@ class DocServer
         
         if(false == $return)
         {
-            // todo: exception
+            throw new Exception("Erro ao escrever o arquivo. Metodo: " . __METHOD__);
         }
 
         return $filapath;
