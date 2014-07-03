@@ -1,0 +1,27 @@
+{
+    "name": "simonetti/losango-docserver",
+    "type": "library",
+    "description": "Componente para comunicação com o DocServer da Losango",
+    "keywords": [],
+    "homepage": "http://www.moveissimonetti.com.br",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Ráfaga Queiroz",
+            "email": "rafaga.queiroz@gmail.com"
+        },
+        {
+            "name": "Vinicius de Sá",
+            "email": "viniciusss@me.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.3",
+        "herzult/php-ssh": "~1.0"
+    },
+    "autoload": {
+        "psr-0": { "": "src/" }
+    },
+    "target-dir": "Simonetti/Losango;DocServer",
+    "minimum-stability": "dev"
+}
