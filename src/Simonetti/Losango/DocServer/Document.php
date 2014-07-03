@@ -1,5 +1,7 @@
 <?php
 
+namespace Simonetti\Losango\DocServer;
+
 abstract class Document
 {
     
@@ -22,18 +24,18 @@ abstract class Document
         $this->docServer->sendFile($filename, $content);
         
         $command = sprintf(
-            '%s %s',
+            '%s %s > /dev/null',
             $this->getBin(),
             $filename
         );
-        
+
         $this->docServer->runCommand($command);
     }
     
     public function fetch($id)
     {
         return $this->docServer->fetchFile(
-            $this->createFilename($id)
+            $this->createFilename($id) . '.pdf'
         );
     }
     

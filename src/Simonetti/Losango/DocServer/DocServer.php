@@ -1,8 +1,14 @@
 <?php
 
+namespace Simonetti\Losango\DocServer;
+
+use Ssh\Session;
+
 class DocServer
 {
-    
+    /**
+     * @var \Ssh\Session
+     */
     private $session;
     
     /**
@@ -10,7 +16,7 @@ class DocServer
      */
     private $configuration;
     
-    public function __construct($session, $configuration)
+    public function __construct(Session $session, Configuration $configuration)
     {
         $this->session = $session;
         $this->configuration = $configuration;
@@ -18,15 +24,12 @@ class DocServer
     
     public function fetchFile($name)
     {
-        $filename = $this->configutarion->getDirectory() . '/resp/' . $name;
+        $filename = $this->configuration->getDirectory() . '/resp/' . $name;
         if( false === $this->session->getSftp()->exists($filename) ) {
             return false;
         }
         
-        $return = $this->session->getSftp()->read(
-            $this->configutarion->getDirectory() . '/resp/' . $name,
-            $content
-        );
+        $return = $this->session->getSftp()->read($filename);
         
         if(false == $return)
         {
@@ -38,8 +41,10 @@ class DocServer
     
     public function sendFile($name, $content)
     {
+        $filapath = $this->configuration->getDirectory() . '/req/' . $name;
+
         $return = $this->session->getSftp()->write(
-            $this->configutarion->getDirectory() . '/req/' . $name,
+            $this->configuration->getDirectory() . '/req/' . $name,
             $content
         );
         
@@ -47,11 +52,13 @@ class DocServer
         {
             // todo: exception
         }
+
+        return $filapath;
     }
     
     public function runCommand($command)
     {
-        $this->session->getSsh()->run(
+        return $this->session->getExec()->run(
             $this->configuration->getDirectory() . trim($command)
         );
     }
