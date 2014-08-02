@@ -19,6 +19,7 @@ abstract class Document
     
     public function generate($id, $content)
     {
+        
         $filename = $this->createFilename($id);
         
         $this->docServer->sendFile($filename, $content);
@@ -29,7 +30,7 @@ abstract class Document
             $filename
         );
 
-        $this->docServer->runCommand($command);
+        return $this->docServer->runCommand($command);
     }
     
     public function fetch($id)
