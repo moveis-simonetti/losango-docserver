@@ -33,7 +33,7 @@ class DocServer
         
         if(false == $return)
         {
-            throw new Exception("Erro ao ler o arquivo. Metodo: " . __METHOD__);
+            throw new \Exception("Erro ao ler o arquivo. Metodo: " . __METHOD__);
         }
         
         return $return;
@@ -50,7 +50,7 @@ class DocServer
         
         if(false == $return)
         {
-            throw new Exception("Erro ao escrever o arquivo. Metodo: " . __METHOD__);
+            throw new \Exception("Erro ao escrever o arquivo. Metodo: " . __METHOD__);
         }
 
         return $filapath;
@@ -58,8 +58,32 @@ class DocServer
     
     public function runCommand($command)
     {
-        return $this->session->getExec()->run(
-            $this->configuration->getDirectory() . trim($command)
-        );
+        try {
+            $output = $this->session->getExec()->run(
+                $this->configuration->getDirectory() . trim($command)
+            );
+        } catch( \Exception $e) {
+            $output = $e->getMessage();
+        }
+        
+        return $this->processCommandOutput($output);
+    }
+    
+    protected function processCommandOutput($output)
+    {
+        $return = '';
+        foreach(explode(PHP_EOL, $output) as $line) {
+            if(false !== stripos($line, 'p11-kit') ) {
+                continue;
+            }
+            
+            $return .= $line;
+        }
+        
+        if(false === stripos($return, 'Exception') ) {
+            return true;
+        }
+        
+        throw new Exception($return);
     }
 }
